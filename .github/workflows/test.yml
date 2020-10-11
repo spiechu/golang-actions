@@ -38,8 +38,3 @@ jobs:
           export PATH=${PATH}:`go env GOPATH`/bin
           go get -u honnef.co/go/tools/cmd/staticcheck
           staticcheck ./...
-
-      - uses: actions/upload-artifact@v1
-        with:
-          name: main-${{ matrix.os }}
-          path: dist/main
