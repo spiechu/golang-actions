@@ -34,21 +34,16 @@ jobs:
           name: main-${{ matrix.runs-on }}
           path: dist/main
 
-  publish:
-    name: Publish new action version
+  check:
+    name: Run static check
     runs-on: ubuntu-latest
     needs: [ build ]
     steps:
-      - uses: actions/download-artifact@v1
-        with:
-          name: main-ubuntu-latest
-      - uses: actions/download-artifact@v1
-        with:
-          name: main-macos-latest
-      - uses: actions/download-artifact@v1
-        with:
-          name: main-windows-latest
-      - uses: actions/download-artifact@v1
-        with:
-          name: main-windows-latest
-      - uses: actions-go/update@v1
+      - name: Staticcheck
+        run: |
+          # add executables installed with go get to PATH
+          # TODO: this will hopefully be fixed by
+          # https://github.com/actions/setup-go/issues/14
+          export PATH=${PATH}:`go env GOPATH`/bin
+          go get -u honnef.co/go/tools/cmd/staticcheck
+          staticcheck ./...
