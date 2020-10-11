@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+    "./console"
+    "os"
+)
 
 func main() {
-    fmt.Printf("Hello GitHub Actions!")
+    console.PrintHelloWorld(os.Stdout)
 }
