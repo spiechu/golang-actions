@@ -24,8 +24,18 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
+      - name: Install dependencies
+        run: |
+          go version
+          go get -u golang.org/x/lint/golint
+
       - name: Build project
-        run: go build -v -o dist/main
+        run: go build -v .
+
+      - name: Run vet & lint
+        run: |
+          go vet .
+          golint .
 
       - name: Test
         run: go test -v ./...
